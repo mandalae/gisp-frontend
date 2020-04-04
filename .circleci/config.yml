@@ -37,7 +37,7 @@ jobs:
           - attach_workspace:
               at: ./
           # run tests!
-          - run: npm test
+          - run: npm run build
   deploy:
     docker:
       - image: circleci/python:2.7-jessie
