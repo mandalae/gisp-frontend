@@ -97,7 +97,7 @@ jobs:
           command: aws s3 sync ./build/ s3://gisp.org.uk --delete --acl public-read
       - run:
           name: Create CloudFront invalidation
-          command: aws cloudfront create-invalidation --distribution-id E381II3YU5LUGB --paths \"/*\"
+          command: aws cloudfront create-invalidation --distribution-id E381II3YU5LUGB --paths "/*"
   acceptanceTests-prod:
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
