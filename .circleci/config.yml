@@ -1,0 +1,99 @@
+version: 2
+jobs:
+  install:
+    docker:
+      - image: circleci/node:10.0.0
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+     # Persist everything to make sure we can run the tests in a separate job
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+              - ./
+  test:
+      docker:
+        - image: circleci/node:10.0.0
+      working_directory: ~/repo
+
+      steps:
+          # Attach workspace with everything in it to run the tests
+          - attach_workspace:
+              at: ./
+          # run tests!
+          - run: npm test
+  deploy:
+    docker:
+      - image: circleci/python:2.7-jessie
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          # Install the aws cli - We've already set up the required keys
+          name: Install awscli
+          command: sudo pip install awscli
+      - run:
+          # Deploy everything from the current directory to an S3 bucket
+          name: Deploy to S3
+          command: npm run deploy:dev
+  acceptanceTests:
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: mkdir test-reports
+      - run:
+          name: Download Selenium
+          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+          background: true
+      - run:
+          name: Bundle install
+          command: bundle install
+      - run:
+          name: Run acceptance tests
+          command: ruby acceptance/suite.rb
+
+
+# Configure the workflows to only run the deployment on master
+workflows:
+  version: 2
+  install-deploy:
+    jobs:
+      - install
+      - test:
+          requires:
+            - install
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+      - acceptanceTests:
+          requires:
+            - deploy
+          filters:
+            branches:
+              only: master
