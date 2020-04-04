@@ -38,6 +38,10 @@ jobs:
               at: ./
           # run tests!
           - run: npm run build
+          - persist_to_workspace:
+              root: ~/repo
+              paths:
+                  - ./
   deploy:
     docker:
       - image: circleci/python:2.7-jessie
