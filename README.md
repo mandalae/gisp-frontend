@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![GISP - Frontend](https://circleci.com/gh/mandalae/gisp-frontend.svg?style=svg)](https://circleci.com/gh/mandalae/gisp-frontend)
 
 ## Available Scripts
 
