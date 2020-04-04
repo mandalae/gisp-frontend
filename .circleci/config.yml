@@ -45,6 +45,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
+      - run: ls -la
       - run:
           # Install the aws cli - We've already set up the required keys
           name: Install awscli
