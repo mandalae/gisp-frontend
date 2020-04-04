@@ -63,16 +63,9 @@ class Documents extends React.Component {
           if (this.state.documents.length > 0){
             const documents = [].concat(this.state.documents)
                 .sort((a, b) => {
-                    if (a.LastModified){
-                        const aDate = new Date(a.LastModified);
-                        const bDate = new Date(b.LastModified);
-                        return bDate.getTime() - aDate.getTime();
-                    } else if (a.lastUpdated) {
-                        const aDate = new Date(a.lastUpdated);
-                        const bDate = new Date(b.lastUpdated);
-                        return bDate.getTime() - aDate.getTime();
-                    }
-                    return null;
+                    const aDate = new Date(a.LastModified || a.lastUpdated);
+                    const bDate = new Date(b.LastModified || b.lastUpdated);
+                    return bDate.getTime() - aDate.getTime();
                 })
                 .map((item, key) => {
                     if (this.state.folder && this.state.folder.folderName !== ''){
