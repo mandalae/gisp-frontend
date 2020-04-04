@@ -53,17 +53,10 @@ class CovidChart extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            graphData: {}
-        };
-
         this.fetchCurrentNumbers = this.fetchCurrentNumbers.bind(this);
     }
 
     componentDidMount() {
-        this.setState({
-            graphData: graphData
-        });
         this.fetchCurrentNumbers();
     }
 
@@ -74,9 +67,9 @@ class CovidChart extends React.Component {
             const labels = Object.keys(data.timeline.cases);
             const cases = Object.values(data.timeline.cases);
             const deaths = Object.values(data.timeline.deaths);
-            this.state.graphData.labels = labels;
-            this.state.graphData.datasets[0].data = cases;
-            this.state.graphData.datasets[1].data = deaths;
+            graphData.labels = labels;
+            graphData.datasets[0].data = cases;
+            graphData.datasets[1].data = deaths;
         });
     }
 
@@ -84,7 +77,7 @@ class CovidChart extends React.Component {
         return (
             <div className="w-100 pr-3">
               <h2>UK COVID-19 numbers over time</h2>
-              <Line data={this.state.graphData} />
+              <Line data={graphData} />
             </div>
         );
     }
