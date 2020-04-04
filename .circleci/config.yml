@@ -79,6 +79,43 @@ jobs:
       - run:
           name: Run acceptance tests
           command: ruby acceptance/suite.rb
+  deploy-prod:
+    docker:
+      - image: circleci/python:2.7-jessie
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: ls -la
+      - run:
+          # Install the aws cli - We've already set up the required keys
+          name: Install awscli
+          command: sudo pip install awscli
+      - run:
+          # Deploy everything from the current directory to an S3 bucket
+          name: Deploy to S3
+          command: aws s3 sync ./build/ s3://gisp.org.uk --delete --acl public-read
+  acceptanceTests-prod:
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: mkdir test-reports
+      - run:
+          name: Download Selenium
+          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+          background: true
+      - run:
+          name: Bundle install
+          command: bundle install
+      - run:
+          name: Run acceptance tests
+          command: ruby acceptance/suite-prod.rb
 
 
 # Configure the workflows to only run the deployment on master
@@ -93,12 +130,18 @@ workflows:
       - deploy:
           requires:
             - test
-          filters:
-            branches:
-              only: master
       - acceptanceTests:
           requires:
             - deploy
+      - deploy-prod:
+          requires:
+            - acceptanceTests
+          filters:
+            branches:
+              only: master
+      - acceptanceTests-prod:
+          requires:
+            - deploy-prod
           filters:
             branches:
               only: master
