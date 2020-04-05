@@ -92,4 +92,5 @@ ul.sidebar.active {
     list-style: none;
     margin-left: 10px;
     font-size: 0.9em;
+    white-space: nowrap;
 }

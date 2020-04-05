@@ -2,6 +2,7 @@ import React from 'react';
 import  { Redirect } from 'react-router-dom';
 
 import FolderService from '../services/FolderService';
+import sessionUtils from '../lib/session';
 
 class FolderSection extends React.Component {
   constructor(props) {
@@ -58,7 +59,7 @@ class FolderSection extends React.Component {
     }
 
   render() {
-      if (!sessionStorage.getItem('covid.loggedin')){
+      if (!sessionUtils.isLoggedIn()){
             return <Redirect to='/' />
       } else {
         let items = this.state.folders.map((item, key) => {

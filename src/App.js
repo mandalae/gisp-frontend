@@ -17,6 +17,9 @@ import InviteForm from './components/InviteForm';
 import AboutPage from './components/AboutPage';
 import CovidNumbers from './components/CovidNumbers';
 import NumbersPage from './components/NumbersPage';
+import LoginPage from './components/LoginPage';
+
+import sessionUtils from './lib/session';
 
 function App() {
     const [show, setShow] = useState(false);
@@ -28,7 +31,7 @@ function App() {
     const handleShowInvite = () => setShowInvite(true);
 
     let search = '';
-    if (sessionStorage.getItem('covid.loggedin')){
+    if (sessionUtils.isLoggedIn()){
         search = (<form className="form-inline">
           <input className="form-control mr-sm-2 hide" type="search" placeholder="Search" aria-label="Search" />
           <button className="btn btn-outline-primary my-2 my-sm-0 hide" type="submit">Search</button>
@@ -85,6 +88,12 @@ function App() {
 
         <Router>
             <Switch>
+                <Route path="/login">
+                    <LoginPage />
+                </Route>
+                <Route path="/logout">
+
+                </Route>
                 <Route path="/numbers">
                     <NumbersPage />
                 </Route>

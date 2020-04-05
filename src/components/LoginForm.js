@@ -1,6 +1,9 @@
 import React from 'react';
 import  { Redirect } from 'react-router-dom'
 import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
+import cognitoUtils from '../lib/cognitoUtils';
+import sessionUtils from '../lib/session';
 
 class LoginForm extends React.Component {
 
@@ -55,8 +58,12 @@ class LoginForm extends React.Component {
       );
   }
 
+  redirectToLogin() {
+      window.location.href = cognitoUtils.getCognitoSignInUri();
+  }
+
   render() {
-      if (sessionStorage.getItem('covid.loggedin')){
+      if (sessionUtils.isLoggedIn()){
           return <Redirect to='/documents' />
       } else {
         let errorBanner = '';
@@ -67,7 +74,7 @@ class LoginForm extends React.Component {
             <div className="col-12">
                 <div className="jumbotron">
                     <p>This facility aims to provide a way to share good practice and helpful ideas for GPs. It is intended to help aid and speed up our ability to develop advice for patients, working procedures, practice protocols etc at this time of national crisis caused by the Coronavirus pandemic.</p>
-                    <div className="row justify-content-md-center mb-3">
+                    <div className="row justify-content-md-center mb-3 hide">
                         <div className="col-2"></div>
                         <div className="col-8">
                             {errorBanner}
@@ -86,6 +93,8 @@ class LoginForm extends React.Component {
                         </div>
                         <div className="col-2"></div>
                     </div>
+
+                    <Button onClick={this.redirectToLogin} className="btn btn-primary">Login</Button>
 
                     <h4>Disclaimer</h4>
                     <ul>

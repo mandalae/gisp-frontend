@@ -3,6 +3,7 @@ import  { Redirect } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 import FolderService from '../services/FolderService';
+import sessionUtils from '../lib/session';
 
 class FileUpload extends React.Component {
   constructor(props) {
@@ -105,7 +106,11 @@ class FileUpload extends React.Component {
           data.append('file', this.state.selectedFile, this.state.selectedFile.name);
           data.append('folder', this.state.selectedFolder);
           const fileToUpload = this.state.selectedFolder + '/' + (this.state.selectedSubFolder ? this.state.selectedSubFolder + '/' : '') + encodeURIComponent(this.state.selectedFileName);
-          fetch("https://3rscxpdnjh.execute-api.eu-west-1.amazonaws.com/default/GPCovidResponse-uploadDocument?document=" + fileToUpload + "&mimeType=" + this.state.selectedFile.type + "&hash=" + sessionStorage.getItem('covid.loggedin'))
+          fetch("https://kkm8yihxck.execute-api.eu-west-1.amazonaws.com/dev/uploaddocument?document=" + fileToUpload + "&mimeType=" + this.state.selectedFile.type, {
+              headers: {
+                  'X-Authorization': sessionUtils.getJWTToken()
+              }
+          })
           .then(res => res.json())
           .then(res => {
               if (res.url){
@@ -129,8 +134,9 @@ class FileUpload extends React.Component {
               url: this.state.url,
               title: this.state.title
           }
-          axios.post("https://3rscxpdnjh.execute-api.eu-west-1.amazonaws.com/default/GPCovidResponse-uploadDocument", JSON.stringify(resource), {
+          axios.post("https://kkm8yihxck.execute-api.eu-west-1.amazonaws.com/dev/uploaddocument", JSON.stringify(resource), {
                 headers: {
+                    'X-Authorization': sessionUtils.getJWTToken(),
                     'Content-Type': 'application/json',
                 }
             }).then(res => {
@@ -146,7 +152,7 @@ class FileUpload extends React.Component {
   }
 
   render() {
-      if (!sessionStorage.getItem('covid.loggedin')){
+      if (!sessionUtils.isLoggedIn()){
             return <Redirect to='/' />
       } else {
           let errorBanner = '';
