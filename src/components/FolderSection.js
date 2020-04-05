@@ -79,8 +79,6 @@ class FolderSection extends React.Component {
             }
             return null;
         });
-        items.push(<li className="nav-item" key="10"><a className={"nav-link btn btn-sm ml-2 mb-1 text-left" + (this.state.folder.folderKey === 'Online Resources' ? ' btn-info' : ' btn-outline-info')} href="/documents" onClick={(e) => { e.preventDefault(); this.fetchFolders({folderKey: 'Online Resources', folderName: 'Online Resources'}); }}>Online Resources</a></li>)
-
         return (
             <ul className="sidebar">
                 {items}
