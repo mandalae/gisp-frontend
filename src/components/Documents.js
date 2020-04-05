@@ -84,18 +84,6 @@ class Documents extends React.Component {
                         {documents}
                     </div>
                 );
-            } else {
-                content = (
-                    <div className="row panel ml-4">
-                        <div className="card">
-                            <img src="/stewart-small.jpg" alt="Stewart Wilkie" style={{width:100 + '%'}} />
-                            <h1>Dr Stewart Wilkie</h1>
-                            <p className="title">General Practitioner</p>
-                            <p>Stewarton Medical Practice</p>
-                            <a href="/about">&nbsp;</a>
-                        </div>
-                    </div>
-                );
             }
             return (
                 <div className="wrapper">
