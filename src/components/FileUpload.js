@@ -1,6 +1,8 @@
 import React from 'react';
 import  { Redirect } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import axios from 'axios';
 import FolderService from '../services/FolderService';
 
@@ -124,10 +126,12 @@ class FileUpload extends React.Component {
           }).catch(err => {
               this.setShowError(true, 'Upload failed, please contact support or try again.');
           });
-      } else if (this.state.url && this.state.title) {
+      } else if (this.state.url && this.state.title && this.state.selectedFolder) {
+          const folder = this.state.selectedFolder + (this.state.selectedSubFolder ? '/' + this.state.selectedSubFolder : '');
           const resource = {
               url: this.state.url,
-              title: this.state.title
+              title: this.state.title,
+              folder: folder
           }
           axios.post("https://3rscxpdnjh.execute-api.eu-west-1.amazonaws.com/default/GPCovidResponse-uploadDocument", JSON.stringify(resource), {
                 headers: {
@@ -157,28 +161,28 @@ class FileUpload extends React.Component {
           if (this.state.showSuccess){
               errorBanner = (<Alert key="success" variant="success" onClose={(e) => this.closeSuccess()} dismissible>{this.state.successMessage}</Alert>)
           }
-          let fileOrUrl = (<div>
-                              <div className="form-group">
-                                  <label htmlFor="documentToUpload">Document</label>
-                                  <input type="file" name="documentToUpload" className="form-control" onChange={this.fileChangeHandler} />
-                              </div>
-                              <div className="form-group">
-                                  <label htmlFor="fileName">File name</label>
-                                  <input type="text" name="selectedFileName" className="form-control" onChange={this.formChangeHandler} value={this.state.selectedFileName} />
-                              </div>
-                          </div>);
-          if (this.isOnlineResources()){
-              fileOrUrl = (<div>
-                      <div className="form-group">
-                          <label htmlFor="url">Resource URL</label>
-                          <input type="text" name="url" className="form-control" onChange={this.formChangeHandler} />
-                      </div>
-                      <div className="form-group">
-                          <label htmlFor="title">Resource Title</label>
-                          <input type="text" name="title" className="form-control" onChange={this.formChangeHandler} />
-                      </div>
-                  </div>)
-          }
+          let fileOrUrl = ( <Tabs defaultActiveKey="file" id="uncontrolled-tab-example">
+                                <Tab eventKey="file" title="File">
+                                    <div className="form-group">
+                                        <label htmlFor="documentToUpload">Document</label>
+                                        <input type="file" name="documentToUpload" className="form-control" onChange={this.fileChangeHandler} />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="fileName">File name</label>
+                                        <input type="text" name="selectedFileName" className="form-control" onChange={this.formChangeHandler} value={this.state.selectedFileName} />
+                                    </div>
+                                </Tab>
+                                <Tab eventKey="onlineResource" title="Online Resource">
+                                    <div className="form-group">
+                                        <label htmlFor="url">Resource URL</label>
+                                        <input type="text" name="url" className="form-control" onChange={this.formChangeHandler} />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="title">Resource Title</label>
+                                        <input type="text" name="title" className="form-control" onChange={this.formChangeHandler} />
+                                    </div>
+                                </Tab>
+                            </Tabs>);
           const topFolders = this.state.topLevelFolders.map(folder => {
               const folderName = folder.folderName.replace('/', '');
               return <option value={folderName} key={folderName}>{folderName}</option>
@@ -196,7 +200,6 @@ class FileUpload extends React.Component {
                     <select name="folder" className="form-control" onChange={this.folderChangeHandler}>
                         <option>Select one</option>
                         {topFolders}
-                        <option value="Online Resources">Online Resources</option>
                     </select>
                 </div>
                 <div className="form-group">
