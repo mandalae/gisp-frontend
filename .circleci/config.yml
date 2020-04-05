@@ -58,6 +58,9 @@ jobs:
           # Deploy everything from the current directory to an S3 bucket
           name: Deploy to S3
           command: aws s3 sync ./build/ s3://dev.gisp.org.uk --delete --acl public-read
+      - run:
+          name: Create CloudFront invalidation
+          command: aws cloudfront create-invalidation --distribution-id E1EWPKMAHKGW82 --paths "/*"
   acceptanceTests:
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
