@@ -18,7 +18,7 @@ def run
 end
 
 run do
-  @driver.get 'http://gisp.skaaning.ninja'
+  @driver.get 'https://dev.gisp.org.uk'
   expect(@driver.title).to eql "COVID-19 GP Information Sharing Portal"
   # @driver.save_screenshot('docker_image.png')
 end
