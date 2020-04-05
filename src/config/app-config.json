@@ -3,8 +3,8 @@
     "userPool": "eu-west-1_kJxriSbkH",
     "userPoolBaseUri": "https://authorization.gisp.org.uk",
     "clientId": "4q1kh3d51oaf6p38f6iiheapdq",
-    "callbackUri": "http://localhost:3000/login",
-    "signoutUri": "http://localhost:3000/logout",
+    "callbackUri": "https://dev.gisp.org.uk/login",
+    "signoutUri": "https://dev.gisp.org.uk/logout",
     "tokenScopes": [
         "openid",
         "email",
