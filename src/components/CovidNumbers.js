@@ -39,7 +39,7 @@ class CovidNumbers extends React.Component {
         const dataUpdated = new Date(this.state.updated);
         const formattedDate = dataUpdated.getHours() + ':' + ('0' + dataUpdated.getMinutes()).slice(-2);
         return (
-            <ul className="covid-numbers">
+            <ul className="covid-numbers align-self-center">
                 <li><i className="fas fa-procedures" title="Active cases"></i> {this.state.cases}</li>
                 <li><i className="fas fa-cloud-rain" title="Number of deaths in the UK"></i> {this.state.deaths}</li>
                 <li><i className="fas fa-bolt" title="Deaths today"></i> {this.state.todayDeaths > 0 ? this.state.todayDeaths : 'N/A'}</li>

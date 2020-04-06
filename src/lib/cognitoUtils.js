@@ -15,8 +15,7 @@ const createCognitoAuth = () => {
     TokenScopesArray: appConfig.tokenScopes,
     RedirectUriSignIn: appConfig.callbackUri,
     RedirectUriSignOut: appConfig.signoutUri
-  })
-  console.log(auth);
+  });
   return auth
 }
 
