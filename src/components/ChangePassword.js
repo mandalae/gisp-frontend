@@ -126,11 +126,11 @@ class ChangePassword extends React.Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="newPassword">New Password</label>
-                    <input type="password" className={"form-control" + (this.state.passwordError ? ' is-invalid' : (this.state.newPassword.length > 0 ? ' is-valid' : ''))} onKeyUp={this.valueChangeHandler} name="newPassword" />
+                    <input type="password" className={"form-control" + (this.state.passwordError ? ' is-invalid' : (this.state.newPassword.length > 0 ? ' is-valid' : ''))} onChange={this.valueChangeHandler} onKeyDown={this.valueChangeHandler} onKeyUp={this.valueChangeHandler} name="newPassword" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="newPassword2">New Password again</label>
-                    <input type="password" className={"form-control" + (this.state.passwordError ? ' is-invalid' : (this.state.newPassword2.length > 0 ? ' is-valid' : ''))}  onKeyUp={this.valueChangeHandler} name="newPassword2" />
+                    <input type="password" className={"form-control" + (this.state.passwordError ? ' is-invalid' : (this.state.newPassword2.length > 0 ? ' is-valid' : ''))}  onChange={this.valueChangeHandler} onKeyDown={this.valueChangeHandler} onKeyUp={this.valueChangeHandler} name="newPassword2" />
                 </div>
                 <button type="submit" className="btn btn-primary" value="Change">Change</button>
             </form>

@@ -18,7 +18,7 @@ def run
 end
 
 run do
-  @driver.get 'https://dev.gisp.org.uk'
+  @driver.get 'http://dev.gisp.org.uk'
   wait = Selenium::WebDriver::Wait.new(:timeout => 300)
   puts @driver.title
   wait.until { @driver.title.start_with? "COVID-19" }
