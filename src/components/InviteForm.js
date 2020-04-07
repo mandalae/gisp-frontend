@@ -2,6 +2,7 @@ import React from 'react';
 import  { Redirect } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
+import sessionUtils from '../lib/session';
 
 class InviteForm extends React.Component {
   constructor(props) {
@@ -84,7 +85,7 @@ class InviteForm extends React.Component {
   }
 
   render() {
-      if (!sessionStorage.getItem('covid.loggedin')){
+      if (!sessionUtils.isLoggedIn()){
             return <Redirect to='/' />
       } else {
           let errorBanner = '';

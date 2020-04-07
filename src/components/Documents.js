@@ -4,6 +4,8 @@ import  { Redirect } from 'react-router-dom';
 import FolderSection from './FolderSection';
 import FolderService from '../services/FolderService';
 
+import sessionUtils from '../lib/session';
+
 class Documents extends React.Component {
     constructor(props) {
         super(props);
@@ -43,7 +45,11 @@ class Documents extends React.Component {
   downloadDocument(event, itemName) {
       event.preventDefault();
 
-      fetch("https://3rscxpdnjh.execute-api.eu-west-1.amazonaws.com/default/GPCovidResponse-getDocument?document=" + encodeURIComponent(itemName) + "&hash=" + sessionStorage.getItem('covid.loggedin'))
+      fetch("https://api.gisp.org.uk/getdocument?document=" + encodeURIComponent(itemName), {
+          headers: {
+              'X-Authorization': sessionUtils.getJWTToken()
+          }
+      })
         .then(res => res.json())
         .then(
           (data) => {
@@ -56,7 +62,7 @@ class Documents extends React.Component {
   }
 
   render() {
-      if (!sessionStorage.getItem('covid.loggedin')){
+      if (!sessionUtils.isLoggedIn()){
             return <Redirect to='/' />
       } else {
           let content = '';
