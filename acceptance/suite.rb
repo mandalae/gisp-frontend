@@ -19,9 +19,7 @@ end
 
 run do
   @driver.get 'http://dev.gisp.org.uk'
-  wait = Selenium::WebDriver::Wait.new(:timeout => 300)
   puts @driver.title
-  wait.until { @driver.title.start_with? "COVID-19" }
   expect(@driver.title).to eql "COVID-19 GP Information Sharing Portal"
   # @driver.save_screenshot('docker_image.png')
 end
