@@ -79,21 +79,21 @@ class ChangePassword extends React.Component {
 
       if (this.state.oldPassword && this.state.newPassword && this.state.newPassword === this.state.newPassword2){
           const cognitoUser = cognitoUtils.createCognitoUser();
+          const that = this;
           cognitoUser.getSession((err, result) => {
               if (err || !result) {
                 console.log(new Error('Failure getting Cognito session: ' + err));
-                this.setShowError(true, 'No user found, please log out and try again');
+                that.setShowError(true, 'No user found, please log out and try again');
                 return
               }
 
               cognitoUser.changePassword(this.state.oldPassword, this.state.newPassword, function(err, result) {
                   if (err || !result) {
                       console.log(err);
-                      this.setShowError(true, 'Failed to sign in, please check your old password is correct');
+                      that.setShowError(true, err.message);
                       return;
                   }
-                  this.showSuccess();
-                  const that = this;
+                  that.setShowSuccess(true);
                   setTimeout(() => {
                       that.closeModal();
                   }, 2000);

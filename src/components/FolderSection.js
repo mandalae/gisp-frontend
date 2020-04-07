@@ -50,6 +50,10 @@ class FolderSection extends React.Component {
                 sessionStorage.setItem('covid.previousFolder', this.state.previousFolder ? this.state.previousFolder.folderName : '');
 
                 this.updateParentFolderName(folder);
+            }).catch(e => {
+                console.log(e);
+                sessionUtils.removeSession();
+                window.location = '/';
             });
         } else {
             this.setState({

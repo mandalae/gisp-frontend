@@ -8,6 +8,9 @@ import {
   Route
 } from "react-router-dom";
 
+import cognitoUtils from './lib/cognitoUtils';
+import sessionUtils from './lib/session';
+
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import LoginForm from './components/LoginForm';
@@ -22,8 +25,6 @@ import NumbersPage from './components/NumbersPage';
 import LoginPage from './components/LoginPage';
 import ChangePassword from './components/ChangePassword';
 
-import sessionUtils from './lib/session';
-
 function App() {
     const [show, setShow] = useState(false);
     const [showInvite, setShowInvite] = useState(false);
@@ -36,6 +37,15 @@ function App() {
     const handleShowInvite = () => setShowInvite(true);
     const handleShowPassword = () => setShowPassword(true);
 
+    const redirectToLogin = () => {
+        window.location.href = cognitoUtils.getCognitoSignInUri();
+    }
+
+    const logout = () => {
+        sessionUtils.removeSession();
+        cognitoUtils.signOutCognitoSession();
+    }
+
     let search = '';
     let profile = '';
     if (sessionUtils.isLoggedIn()){
@@ -43,20 +53,24 @@ function App() {
           <input className="form-control mr-sm-2 hide" type="search" placeholder="Search" aria-label="Search" />
           <button className="btn btn-outline-primary my-2 my-sm-0 hide" type="submit">Search</button>
           <button className="btn btn-success ml-2" onClick={handleShow} value="Upload" type="button">Upload</button>
-          <button className="btn btn-success ml-2 hide" onClick={handleShowInvite} value="Upload" type="button">+ Invite</button>
         </form>);
         profile = (<Dropdown className="ml-4">
           <Dropdown.Toggle id="dropdown-basic">
-              <i className="fas fa-user-md"></i>
+              <i className="fas fa-user-md mr-2"></i>
+              User Profile
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1" disabled>Email: {sessionUtils.getEmail()}</Dropdown.Item>
-            <Dropdown.Item href="#/action-2" onClick={handleShowPassword}>Change Password</Dropdown.Item>
+            <Dropdown.Item href="#/action-1" disabled><i className="far fa-envelope mr-2"></i>Email: {sessionUtils.getEmail()}</Dropdown.Item>
+            <Dropdown.Item href="#/action-2" onClick={handleShowPassword}><i className="fas fa-lock mr-2"></i>Change Password</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item href="#/action-3" onClick={handleShowInvite}>+ Invite Colleagues</Dropdown.Item>
+            <Dropdown.Item href="#/action-3" onClick={handleShowInvite}><i className="fas fa-user-plus mr-2"></i>Invite Colleagues</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item href="#/action-4" onClick={logout}><i className="fas fa-sign-out-alt mr-2"></i>Logout</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>);
+    } else {
+        profile = (<Button onClick={redirectToLogin} className="btn btn-primary ml-4">Login</Button>);
     }
 
     let homeActive = (window.location.href.indexOf('/about') === -1 && window.location.href.indexOf('/numbers') === -1) ? 'active' : '';
@@ -126,7 +140,7 @@ function App() {
                     <LoginPage />
                 </Route>
                 <Route path="/logout">
-
+                    <LoginForm />
                 </Route>
                 <Route path="/numbers">
                     <NumbersPage />

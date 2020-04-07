@@ -19,6 +19,10 @@ const setSession = session => {
     sessionStorage.setItem('gisp.session', JSON.stringify(session));
 }
 
+const removeSession = () => {
+    sessionStorage.removeItem('gisp.session');
+}
+
 const getJWTToken = () => {
     return getSession().credentials.idToken;
 }
@@ -31,5 +35,6 @@ export default {
     setSession,
     isLoggedIn,
     getJWTToken,
-    getEmail
+    getEmail,
+    removeSession
 }
