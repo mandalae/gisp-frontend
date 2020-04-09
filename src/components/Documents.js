@@ -5,6 +5,7 @@ import FolderSection from './FolderSection';
 import FolderService from '../services/FolderService';
 
 import sessionUtils from '../lib/session';
+import analytics from '../lib/analytics';
 
 class Documents extends React.Component {
     constructor(props) {
@@ -34,6 +35,8 @@ class Documents extends React.Component {
     }
 
   fetchDocuments(folder) {
+      analytics.recordEvent(`Loaded folder: ${folder.folderName}`);
+      
       FolderService.fetchDocuments(folder.folderKey).then(documents => {
           this.setState({
               previousFolderName: sessionStorage.getItem('covid.previousFolder'),
