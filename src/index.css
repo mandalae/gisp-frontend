@@ -68,7 +68,6 @@ body {
 
 .sidebar-container button {
     margin-left: 18px;
-    display: none;
 }
 
 ul.sidebar {
@@ -91,7 +90,7 @@ ul.sidebar.active {
 }
 
 @media only screen
-  and (max-width: 735px) {
+  and (max-width: 479px) {
     .covid-numbers {
         display: none !important;
     }
@@ -103,26 +102,6 @@ ul.sidebar.active {
     .gisp-header:after {
         content: 'COVID-19 GISP';
     }
-}
-
-@media only screen
-  and (min-device-width: 414px)
-  and (max-device-width: 736px)
-  and (-webkit-min-device-pixel-ratio: 3)
-  and (orientation: portrait) {
-      .sidebar-container button {
-          display: none;
-      }
-}
-
-@media only screen
-  and (min-device-width: 375px)
-  and (max-device-width: 812px)
-  and (-webkit-min-device-pixel-ratio: 3)
-  and (orientation: portrait) {
-      .sidebar-container button {
-          display: none;
-      }
 }
 
 .page-header h3 {
