@@ -161,7 +161,7 @@ workflows:
             - deploy
       - build-prod:
           requires:
-            - deploy
+            - acceptanceTests
           filters:
             branches:
               only: master
