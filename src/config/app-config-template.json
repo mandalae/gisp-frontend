@@ -1,0 +1,16 @@
+{
+    "region": "eu-west-1",
+    "userPool": "<userPool>",
+    "userPoolBaseUri": "https://authorization.gisp.org.uk",
+    "clientId": "<clientId>",
+    "callbackUri": "<callbackUri>",
+    "signoutUri": "<signoutUri>",
+    "tokenScopes": [
+        "openid",
+        "email",
+        "profile",
+        "https://gisp.org.uk/gisp.all"
+    ],
+    "appId": "0044880363ab4537b05d7c93f57bea71",
+    "identityPoolId": "eu-west-1:05265d0e-e4f2-4a94-8193-5d035980195b"
+}

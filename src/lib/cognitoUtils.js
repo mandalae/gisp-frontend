@@ -37,6 +37,11 @@ const getCognitoSignInUri = () => {
   return signinUri
 }
 
+const getCognitoSignUpUri = () => {
+  const signupUri = `${appConfig.userPoolBaseUri}/signup?response_type=code&client_id=${appConfig.clientId}&redirect_uri=${appConfig.callbackUri}`
+  return signupUri
+}
+
 // Parse the response from a Cognito callback URI (assumed a token or code is in the supplied href). Returns a promise.
 const parseCognitoWebResponse = (href) => {
   return new Promise((resolve, reject) => {
@@ -96,6 +101,7 @@ export default {
   createCognitoUserPool,
   getCognitoSession,
   getCognitoSignInUri,
+  getCognitoSignUpUri,
   parseCognitoWebResponse,
   signOutCognitoSession
 }

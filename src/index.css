@@ -61,9 +61,17 @@ body {
     align-items: stretch;
 }
 
-ul.sidebar {
+.sidebar-container {
     min-width: 250px;
     max-width: 250px;
+}
+
+.sidebar-container button {
+    margin-left: 18px;
+    display: none;
+}
+
+ul.sidebar {
     margin: 0px;
     padding-left: 0px;
 }
@@ -76,6 +84,26 @@ ul.sidebar li {
 
 ul.sidebar.active {
     margin-left: -232px;
+}
+
+@media only screen
+  and (min-device-width: 414px)
+  and (max-device-width: 736px)
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) {
+      .sidebar-container button {
+          display: none;
+      }
+}
+
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 812px)
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) {
+      .sidebar-container button {
+          display: none;
+      }
 }
 
 .page-header h3 {
