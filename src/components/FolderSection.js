@@ -85,9 +85,12 @@ class FolderSection extends React.Component {
             return null;
         });
         return (
-            <ul className="sidebar">
-                {items}
-            </ul>
+            <div className="sidebar-container">
+                <button value="" className="btn btn-primary"><i class="fas fa-bars"></i></button>
+                <ul className="sidebar">
+                    {items}
+                </ul>
+            </div>
         );
     }
   }

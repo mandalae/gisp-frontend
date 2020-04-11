@@ -1,7 +1,7 @@
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
 import { config as AWSConfig } from 'aws-sdk';
-import appConfig from '../config/app-config.json';
+import appConfig from '../config/app-config-local.json';
 
 AWSConfig.region = appConfig.region
 
@@ -35,6 +35,11 @@ const createCognitoUserPool = () => new CognitoUserPool({
 const getCognitoSignInUri = () => {
   const signinUri = `${appConfig.userPoolBaseUri}/login?response_type=code&client_id=${appConfig.clientId}&redirect_uri=${appConfig.callbackUri}`
   return signinUri
+}
+
+const getCognitoSignUpUri = () => {
+  const signupUri = `${appConfig.userPoolBaseUri}/signup?response_type=code&client_id=${appConfig.clientId}&redirect_uri=${appConfig.callbackUri}`
+  return signupUri
 }
 
 // Parse the response from a Cognito callback URI (assumed a token or code is in the supplied href). Returns a promise.
@@ -96,6 +101,7 @@ export default {
   createCognitoUserPool,
   getCognitoSession,
   getCognitoSignInUri,
+  getCognitoSignUpUri,
   parseCognitoWebResponse,
   signOutCognitoSession
 }
