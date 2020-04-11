@@ -91,7 +91,7 @@ ul.sidebar.active {
 }
 
 @media only screen
-  and (max-width: 800px) {
+  and (max-width: 735px) {
     .covid-numbers {
         display: none !important;
     }
