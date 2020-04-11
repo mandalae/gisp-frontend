@@ -75,7 +75,7 @@ function App() {
         </Dropdown>);
     } else {
         profile = (
-            <div>
+            <div className="sign-x-buttons">
                 <Button onClick={redirectToLogin} className="btn btn-primary ml-4">Login</Button>
                 <Button onClick={redirectToSignup} className="btn btn-primary ml-2">Sign Up</Button>
             </div>
@@ -88,7 +88,7 @@ function App() {
   return (
     <div>
         <div className="page-header d-flex pr-3">
-            <h3 className="flex-grow-1 ">COVID-19 GP Information Sharing Portal</h3>
+            <h3 className="flex-grow-1 gisp-header"><span>COVID-19 GP Information Sharing Portal</span></h3>
             <CovidNumbers />
             {profile}
         </div>
