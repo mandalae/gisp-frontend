@@ -72,24 +72,24 @@ class Documents extends React.Component {
   render() {
     if (!sessionUtils.isLoggedIn()) {
       return <Redirect to="/" />;
+    } else {
+      const hasDocuments = this.state.documents.length > 0;
+      return (
+        <div className="wrapper">
+          <FolderSection updateParentFolderName={this.updateFolderName} />
+          {hasDocuments ? (
+            <DocumentsList
+              documents={this.state.documents}
+              folder={this.state.folder}
+              previousFolderName={this.state.previousFolderName}
+              onDocumentClick={this.downloadDocument}
+            />
+          ) : (
+            <Welcome />
+          )}
+        </div>
+      );
     }
-
-    const hasDocuments = this.state.documents.length > 0;
-    return (
-      <div className="wrapper">
-        <FolderSection updateParentFolderName={this.updateFolderName} />
-        {hasDocuments ? (
-          <DocumentsList
-            documents={this.state.documents}
-            folder={this.state.folder}
-            previousFolderName={this.state.previousFolderName}
-            onDocumentClick={this.downloadDocument}
-          />
-        ) : (
-          <Welcome />
-        )}
-      </div>
-    );
   }
 }
 
