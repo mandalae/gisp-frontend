@@ -41,6 +41,10 @@ function App() {
         window.location.href = cognitoUtils.getCognitoSignInUri();
     }
 
+    const redirectToSignup = () => {
+        window.location.href = cognitoUtils.getCognitoSignUpUri();
+    }
+
     const logout = () => {
         sessionUtils.removeSession();
         cognitoUtils.signOutCognitoSession();
@@ -70,7 +74,12 @@ function App() {
           </Dropdown.Menu>
         </Dropdown>);
     } else {
-        profile = (<Button onClick={redirectToLogin} className="btn btn-primary ml-4">Login</Button>);
+        profile = (
+            <div className="sign-x-buttons">
+                <Button onClick={redirectToLogin} className="btn btn-primary ml-4">Login</Button>
+                <Button onClick={redirectToSignup} className="btn btn-primary ml-2">Sign Up</Button>
+            </div>
+        );
     }
 
     let homeActive = (window.location.href.indexOf('/about') === -1 && window.location.href.indexOf('/numbers') === -1) ? 'active' : '';
@@ -79,7 +88,7 @@ function App() {
   return (
     <div>
         <div className="page-header d-flex pr-3">
-            <h3 className="flex-grow-1 ">COVID-19 GP Information Sharing Portal</h3>
+            <h3 className="flex-grow-1 gisp-header"><span>COVID-19 GP Information Sharing Portal</span></h3>
             <CovidNumbers />
             {profile}
         </div>

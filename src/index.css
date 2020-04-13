@@ -61,9 +61,16 @@ body {
     align-items: stretch;
 }
 
-ul.sidebar {
+.sidebar-container {
     min-width: 250px;
     max-width: 250px;
+}
+
+.sidebar-container button {
+    margin-left: 18px;
+}
+
+ul.sidebar {
     margin: 0px;
     padding-left: 0px;
 }
@@ -76,6 +83,25 @@ ul.sidebar li {
 
 ul.sidebar.active {
     margin-left: -232px;
+}
+
+.sign-x-buttons {
+    white-space: nowrap;
+}
+
+@media only screen
+  and (max-width: 479px) {
+    .covid-numbers {
+        display: none !important;
+    }
+
+    .gisp-header span {
+        display: none;
+    }
+
+    .gisp-header:after {
+        content: 'COVID-19 GISP';
+    }
 }
 
 .page-header h3 {

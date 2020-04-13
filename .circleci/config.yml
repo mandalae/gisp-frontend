@@ -28,20 +28,23 @@ jobs:
           paths:
               - ./
   test:
-      docker:
-        - image: circleci/node:10.0.0
-      working_directory: ~/repo
+    docker:
+    - image: circleci/node:10.0.0
+    working_directory: ~/repo
 
-      steps:
-          # Attach workspace with everything in it to run the tests
-          - attach_workspace:
-              at: ./
-          # run tests!
-          - run: npm run build
-          - persist_to_workspace:
-              root: ~/repo
-              paths:
-                  - ./
+    steps:
+      # Attach workspace with everything in it to run the tests
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Add dev site config
+          command: chmod u+x ./deployment/generate-config.sh && ./deployment/generate-config.sh dev
+      # run tests!
+      - run: npm run build
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+              - ./
   deploy:
     docker:
       - image: circleci/python:2.7-jessie
@@ -49,7 +52,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-      - run: ls -la
       - run:
           # Install the aws cli - We've already set up the required keys
           name: Install awscli
@@ -82,6 +84,24 @@ jobs:
       - run:
           name: Run acceptance tests
           command: ruby acceptance/suite.rb
+  build-prod:
+    docker:
+      - image: circleci/node:10.0.0
+    working_directory: ~/repo
+
+    steps:
+        # Attach workspace with everything in it to run the tests
+        - attach_workspace:
+            at: ./
+        - run:
+            name: Add prod site config
+            command: chmod u+x ./deployment/generate-config.sh && ./deployment/generate-config.sh prod
+        # run the build
+        - run: npm run build
+        - persist_to_workspace:
+            root: ~/repo
+            paths:
+                - ./
   deploy-prod:
     docker:
       - image: circleci/python:2.7-jessie
@@ -139,9 +159,15 @@ workflows:
       - acceptanceTests:
           requires:
             - deploy
-      - deploy-prod:
+      - build-prod:
           requires:
             - acceptanceTests
+          filters:
+            branches:
+              only: master
+      - deploy-prod:
+          requires:
+            - build-prod
           filters:
             branches:
               only: master

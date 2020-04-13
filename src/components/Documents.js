@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import FolderSection from "./FolderSection";
 import FolderService from "../services/FolderService";
 import sessionUtils from "../lib/session";
+import analytics from "../lib/session";
 import { DocumentsList } from "./DocumentsList";
 import { Welcome } from "./Welcome";
 
@@ -35,6 +36,8 @@ class Documents extends React.Component {
   }
 
   fetchDocuments(folder) {
+    analytics.recordEvent(`Loaded folder: ${folder.folderName}`);
+
     FolderService.fetchDocuments(folder.folderKey).then((documents) => {
       this.setState({
         previousFolderName: sessionStorage.getItem("covid.previousFolder"),
