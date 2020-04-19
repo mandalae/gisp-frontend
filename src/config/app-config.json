@@ -2,9 +2,9 @@
   "region": "eu-west-1",
   "userPool": "eu-west-1_kJxriSbkH",
   "userPoolBaseUri": "https://authorization.gisp.org.uk",
-  "clientId": "7vo3m67c8dpg9uaq0qqouoqjvj",
-  "callbackUri": "http://localhost:3000/login",
-  "signoutUri": "http://localhost:3000/logout",
+  "clientId": "4q1kh3d51oaf6p38f6iiheapdq",
+  "callbackUri": "https://gisp.org.uk/login",
+  "signoutUri": "https://gisp.org.uk/logout",
   "tokenScopes": ["openid", "email", "profile", "https://gisp.org.uk/gisp.all"],
   "appId": "0044880363ab4537b05d7c93f57bea71",
   "identityPoolId": "eu-west-1:05265d0e-e4f2-4a94-8193-5d035980195b"
