@@ -141,7 +141,7 @@ class FileUpload extends React.Component {
           axios.post("https://kkm8yihxck.execute-api.eu-west-1.amazonaws.com/dev/uploaddocument", JSON.stringify(resource), {
                 headers: {
                     'X-Authorization': sessionUtils.getJWTToken(),
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             }).then(res => {
                 this.setShowSuccess(true, 'Upload successful, thank you for your contribution');
