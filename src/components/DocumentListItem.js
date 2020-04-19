@@ -33,6 +33,8 @@ export const ListItem = ({
       });
   };
 
+  const onClose = () => setShow(false);
+
   return (
     <React.Fragment>
       <div className="list-group-item list-group-item-action w-100">
@@ -64,7 +66,7 @@ export const ListItem = ({
           />
         </span>
       </div>
-      <Modal show={show} onHide={onFlagClick}>
+      <Modal show={show} onHide={onClose}>
         <Modal.Header closeButton>
           <Modal.Title>Flag for deletion</Modal.Title>
         </Modal.Header>
@@ -96,7 +98,7 @@ export const ListItem = ({
               Loading...
             </Button>
           )}
-          <Button variant="primary" onClick={() => setShow(false)}>
+          <Button variant="primary" onClick={onClose}>
             Close
           </Button>
         </Modal.Footer>

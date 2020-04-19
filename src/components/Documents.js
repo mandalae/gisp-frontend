@@ -7,6 +7,7 @@ import sessionUtils from "../lib/session";
 import analytics from "../lib/analytics";
 import { DocumentsList } from "./DocumentsList";
 import { Welcome } from "./Welcome";
+import { LatestDocuments } from "./LatestDocuments";
 
 class Documents extends React.Component {
   constructor(props) {
@@ -16,7 +17,6 @@ class Documents extends React.Component {
       documents: [],
       folder: null,
       previousFolderName: "",
-      onlineResources: [],
     };
 
     this.updateFolderName = this.updateFolderName.bind(this);
@@ -75,6 +75,7 @@ class Documents extends React.Component {
     }
 
     const hasDocuments = this.state.documents.length > 0;
+
     return (
       <div className="wrapper">
         <FolderSection updateParentFolderName={this.updateFolderName} />
@@ -86,7 +87,10 @@ class Documents extends React.Component {
             onDocumentClick={this.downloadDocument}
           />
         ) : (
-          <Welcome />
+          <div className="welcome-container">
+            <Welcome />
+            <LatestDocuments onDocumentClick={this.downloadDocument} />
+          </div>
         )}
       </div>
     );
