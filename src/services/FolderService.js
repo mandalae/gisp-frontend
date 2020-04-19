@@ -15,7 +15,14 @@ export const FolderService = (props) => {
                     'X-Authorization': session.getJWTToken()
                 }
             })
-              .then(res => res.json())
+              .then(res => {
+                  if (res.status === 200){
+                      return res.json()
+                  } else {
+                      reject('Error happened on the server side.');
+                  }
+                  return null;
+              })
               .then(
                 result => {
                     const onlyFolders = result.filter(item => {
@@ -48,7 +55,14 @@ export const FolderService = (props) => {
                     'X-Authorization': session.getJWTToken()
                 }
             })
-              .then(res => res.json())
+            .then(res => {
+                if (res.status === 200){
+                    return res.json()
+                } else {
+                    reject('Error happened on the server side.');
+                }
+                return null;
+            })
               .then(
                 result => {
                     const onlyDocuments = result.filter(item => {

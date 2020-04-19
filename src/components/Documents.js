@@ -36,37 +36,39 @@ class Documents extends React.Component {
   }
 
   fetchDocuments(folder) {
-    analytics.recordEvent(`Loaded folder: ${folder.folderName}`);
-
-    FolderService.fetchDocuments(folder.folderKey).then((documents) => {
-      this.setState({
-        previousFolderName: sessionStorage.getItem("covid.previousFolder"),
-        documents: documents,
+      analytics.recordEvent('loaded_folder', {
+          folder: folder.folderName
       });
-    });
+
+      FolderService.fetchDocuments(folder.folderKey).then(documents => {
+          this.setState({
+              previousFolderName: sessionStorage.getItem('covid.previousFolder'),
+              documents: documents
+          });
+      });
   }
 
   downloadDocument(event, itemName) {
     event.preventDefault();
 
-    fetch(
-      "https://api.gisp.org.uk/getdocument?document=" +
-        encodeURIComponent(itemName),
-      {
-        headers: {
-          "X-Authorization": sessionUtils.getJWTToken(),
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then(
-        (data) => {
-          window.location = data.url;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      analytics.recordEvent('document_download', {
+          document: itemName
+      });
+
+      fetch("https://api.gisp.org.uk/getdocument?document=" + encodeURIComponent(itemName), {
+          headers: {
+              'X-Authorization': sessionUtils.getJWTToken()
+          }
+      })
+        .then(res => res.json())
+        .then(
+          (data) => {
+              window.location = data.url;
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
   }
 
   render() {

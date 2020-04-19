@@ -73,8 +73,13 @@ class InviteForm extends React.Component {
       }
 
       if (goodEmails.length > 0){
-          this.setShowSuccess(true);
-          axios.post("https://3rscxpdnjh.execute-api.eu-west-1.amazonaws.com/default/GPCovidResponse-Invite", JSON.stringify(goodEmails), {}).then(res => {
+          axios.post("https://kkm8yihxck.execute-api.eu-west-1.amazonaws.com/dev/invite", JSON.stringify({emails: goodEmails}), {
+              headers: {
+                  'X-Authorization': sessionUtils.getJWTToken(),
+                  'Content-Type': 'application/json'
+              }
+          }).then(res => {
+              this.setShowSuccess(true);
               const that = this;
               setTimeout(() => {
                   that.closeModal();

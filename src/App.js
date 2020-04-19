@@ -10,6 +10,7 @@ import {
 
 import cognitoUtils from './lib/cognitoUtils';
 import sessionUtils from './lib/session';
+import analytics from './lib/analytics';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 
@@ -38,14 +39,20 @@ function App() {
     const handleShowPassword = () => setShowPassword(true);
 
     const redirectToLogin = () => {
+        analytics.recordEvent('redirect_to_login');
+
         window.location.href = cognitoUtils.getCognitoSignInUri();
     }
 
     const redirectToSignup = () => {
+        analytics.recordEvent('redirect_to_signup');
+
         window.location.href = cognitoUtils.getCognitoSignUpUri();
     }
 
     const logout = () => {
+        analytics.recordEvent('logout');
+
         sessionUtils.removeSession();
         cognitoUtils.signOutCognitoSession();
     }
