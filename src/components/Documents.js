@@ -35,8 +35,10 @@ class Documents extends React.Component {
     }
 
   fetchDocuments(folder) {
-      analytics.recordEvent(`Loaded folder: ${folder.folderName}`);
-      
+      analytics.recordEvent('loaded_folder', {
+          folder: folder.folderName
+      });
+
       FolderService.fetchDocuments(folder.folderKey).then(documents => {
           this.setState({
               previousFolderName: sessionStorage.getItem('covid.previousFolder'),
@@ -47,6 +49,10 @@ class Documents extends React.Component {
 
   downloadDocument(event, itemName) {
       event.preventDefault();
+
+      analytics.recordEvent('document_download', {
+          document: itemName
+      });
 
       fetch("https://api.gisp.org.uk/getdocument?document=" + encodeURIComponent(itemName), {
           headers: {
