@@ -20,24 +20,31 @@ class AboutPage extends React.Component {
                 <div className="row panel">
                     <div className="card">
                         <img src="/stewart-small.jpg" alt="Stewart Wilkie" style={{width:100 + '%'}} />
-                        <h1>Dr Stewart Wilkie</h1>
+                        <h3>Dr Stewart Wilkie</h3>
                         <p className="title">General Practitioner</p>
                         <p>Stewarton Medical Practice</p>
                         <a href="/about">&nbsp;</a>
                     </div>
                     <div className="card">
                         <img src="/joss-small.jpg" alt="Jocelyn Skaaning" style={{width:100 + '%'}} />
-                        <h1>Dr Jocelyn Skaaning</h1>
+                        <h3>Dr Jocelyn Skaaning</h3>
                         <p className="title">General Practitioner</p>
                         <p>Frew Terrace Medial Practice</p>
                         <a href="https://www.linkedin.com/in/jocelyn-skaaning-1b80508b/"><i className="fa fa-linkedin"></i></a>
                     </div>
                     <div className="card">
                         <img src="/chris-small.jpg" alt="Chris Skaaning" style={{width:100 + '%'}} />
-                        <h1>Chris Skaaning</h1>
+                        <h3>Chris Skaaning</h3>
                         <p className="title">Software Engineer</p>
                         <p>Lead Developer, GISP</p>
                         <a href="https://www.linkedin.com/in/chris-skaaning-0a99b43/"><i className="fa fa-linkedin"></i></a>
+                    </div>
+                    <div className="card">
+                        <img src="/alex.jpg" alt="Alexander Gagarin" style={{width:100 + '%'}}  widtt="298" height="298" />
+                        <h3>Alex Gagarin</h3>
+                        <p className="title">Engineer</p>
+                        <p>Product Development, GISP</p>
+                        <a href="https://www.linkedin.com/in/alexander-gagarin/"><i className="fa fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>

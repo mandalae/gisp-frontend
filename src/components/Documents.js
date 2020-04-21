@@ -7,6 +7,7 @@ import sessionUtils from "../lib/session";
 import analytics from "../lib/analytics";
 import { DocumentsList } from "./DocumentsList";
 import { Welcome } from "./Welcome";
+import { LatestDocuments } from "./LatestDocuments";
 
 class Documents extends React.Component {
   constructor(props) {
@@ -16,7 +17,6 @@ class Documents extends React.Component {
       documents: [],
       folder: null,
       previousFolderName: "",
-      onlineResources: [],
     };
 
     this.updateFolderName = this.updateFolderName.bind(this);
@@ -36,39 +36,43 @@ class Documents extends React.Component {
   }
 
   fetchDocuments(folder) {
-      analytics.recordEvent('loaded_folder', {
-          folder: folder.folderName
-      });
+    analytics.recordEvent("loaded_folder", {
+      folder: folder.folderName,
+    });
 
-      FolderService.fetchDocuments(folder.folderKey).then(documents => {
-          this.setState({
-              previousFolderName: sessionStorage.getItem('covid.previousFolder'),
-              documents: documents
-          });
+    FolderService.fetchDocuments(folder.folderKey).then((documents) => {
+      this.setState({
+        previousFolderName: sessionStorage.getItem("covid.previousFolder"),
+        documents: documents,
       });
+    });
   }
 
   downloadDocument(event, itemName) {
     event.preventDefault();
 
-      analytics.recordEvent('document_download', {
-          document: itemName
-      });
+    analytics.recordEvent("document_download", {
+      document: itemName,
+    });
 
-      fetch("https://api.gisp.org.uk/getdocument?document=" + encodeURIComponent(itemName), {
-          headers: {
-              'X-Authorization': sessionUtils.getJWTToken()
-          }
-      })
-        .then(res => res.json())
-        .then(
-          (data) => {
-              window.location = data.url;
-          },
-          (error) => {
-            console.log(error);
-          }
-        )
+    fetch(
+      "https://api.gisp.org.uk/getdocument?document=" +
+        encodeURIComponent(itemName),
+      {
+        headers: {
+          "X-Authorization": sessionUtils.getJWTToken(),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then(
+        (data) => {
+          window.location = data.url;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   render() {
@@ -77,18 +81,24 @@ class Documents extends React.Component {
     }
 
     const hasDocuments = this.state.documents.length > 0;
+
     return (
       <div className="wrapper">
         <FolderSection updateParentFolderName={this.updateFolderName} />
-        {hasDocuments ? (
+        {hasDocuments && (
           <DocumentsList
             documents={this.state.documents}
             folder={this.state.folder}
             previousFolderName={this.state.previousFolderName}
             onDocumentClick={this.downloadDocument}
           />
-        ) : (
-          <Welcome />
+        )}
+
+        {!hasDocuments && !(this.state.folder && this.state.folder.folderName) && (
+          <div className="welcome-container">
+            <Welcome />
+            <LatestDocuments onDocumentClick={this.downloadDocument} />
+          </div>
         )}
       </div>
     );
