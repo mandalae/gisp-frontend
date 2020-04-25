@@ -80,7 +80,7 @@ class CovidNumbers extends React.Component {
 
     render() {
         const dataUpdated = new Date(this.state.updated);
-        const formattedDate = (('0' + (parseInt(dataUpdated.getMonth()) + 1)).slice(-2)) + '/' + ('0' + dataUpdated.getDate()).slice(-2) + '/' + dataUpdated.getFullYear();
+        const formattedDate =  ('0' + dataUpdated.getDate()).slice(-2) + '/' + (('0' + (parseInt(dataUpdated.getMonth()) + 1)).slice(-2)) + '/' + dataUpdated.getFullYear();
         return (
             <ul className="covid-numbers align-self-center">
                 <li><i className="fas fa-procedures" title="Total cases"></i> {this.state.cases}</li>
