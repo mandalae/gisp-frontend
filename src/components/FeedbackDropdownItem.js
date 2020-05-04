@@ -6,7 +6,9 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import Form from "react-bootstrap/Form";
 
-export const Feedback = () => {
+import Dropdown from "react-bootstrap/Dropdown";
+
+export const FeedbackDropdownItem = ({ href }) => {
   const [show, setShow] = useState(false);
   const [feedbackText, setFeedbackText] = useState("");
 
@@ -95,13 +97,9 @@ export const Feedback = () => {
 
   return (
     <React.Fragment>
-      <button
-        className="btn btn-primary ml-2"
-        onClick={onFeedbackClick}
-        type="button"
-      >
-        Feedback
-      </button>
+      <Dropdown.Item href={href} onClick={onFeedbackClick}>
+        <i class="fas fa-comment-dots mr-2"></i>Leave Feedback
+      </Dropdown.Item>
       {modalWindow}
     </React.Fragment>
   );

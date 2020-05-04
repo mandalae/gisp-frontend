@@ -21,7 +21,7 @@ import CovidNumbers from "./components/CovidNumbers";
 import NumbersPage from "./components/NumbersPage";
 import LoginPage from "./components/LoginPage";
 import ChangePassword from "./components/ChangePassword";
-import { Feedback } from "./components/Feedback";
+import { FeedbackDropdownItem } from "./components/FeedbackDropdownItem";
 
 function App() {
   const [show, setShow] = useState(false);
@@ -79,7 +79,6 @@ function App() {
         >
           Upload
         </button>
-        <Feedback />
       </form>
     );
     profile = (
@@ -101,8 +100,9 @@ function App() {
           <Dropdown.Item href="#/action-3" onClick={handleShowInvite}>
             <i className="fas fa-user-plus mr-2"></i>Invite Colleagues
           </Dropdown.Item>
+          <FeedbackDropdownItem href="#/action-4" />
           <Dropdown.Divider />
-          <Dropdown.Item href="#/action-4" onClick={logout}>
+          <Dropdown.Item href="#/action-5" onClick={logout}>
             <i className="fas fa-sign-out-alt mr-2"></i>Logout
           </Dropdown.Item>
         </Dropdown.Menu>
